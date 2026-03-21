@@ -8,7 +8,7 @@ interface GlassCardProps {
 }
 
 export function GlassCard({ children, className = '', onClick, pressable }: GlassCardProps) {
-  const base = 'bg-white/70 backdrop-blur-md border border-white/40 rounded-2xl shadow-sm'
+  const base = 'bg-white rounded-2xl shadow-[0_2px_16px_rgba(0,0,0,0.06)] border border-black/[0.04]'
   const interactive = pressable || onClick
     ? 'cursor-pointer active:scale-[0.97] transition-transform duration-150 select-none'
     : ''

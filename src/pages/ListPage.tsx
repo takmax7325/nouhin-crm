@@ -126,6 +126,14 @@ export function ListPage() {
   )
 }
 
+// ── Status config ─────────────────────────────────
+const STATUS_CONFIG: Record<string, { label: string; color: string; bg: string }> = {
+  pending:     { label: '未配達', color: '#f59e0b', bg: '#fef3c7' },
+  delivered:   { label: '配達済', color: '#10b981', bg: '#d1fae5' },
+  failed:      { label: '失敗',   color: '#ef4444', bg: '#fee2e2' },
+  rescheduled: { label: '再調整', color: '#8b5cf6', bg: '#ede9fe' },
+}
+
 // ── Delivery Row ─────────────────────────────────
 interface DeliveryRowProps {
   delivery: Delivery
@@ -135,56 +143,96 @@ interface DeliveryRowProps {
 
 function DeliveryRow({ delivery, onTap, onDelete }: DeliveryRowProps) {
   const [showActions, setShowActions] = useState(false)
+  const st = STATUS_CONFIG[delivery.status] ?? STATUS_CONFIG.pending
 
   return (
-    <GlassCard
-      className="p-4 animate-fade-in"
-      pressable
+    <div
+      className="
+        relative bg-white rounded-2xl overflow-hidden
+        shadow-[0_2px_12px_rgba(0,0,0,0.06)]
+        border border-black/[0.04]
+        active:scale-[0.985] transition-all duration-150
+        animate-fade-in
+      "
       onClick={onTap}
     >
-      <div className="flex items-center gap-3">
-        {/* Icon */}
-        <div className="w-14 h-14 bg-gradient-to-br from-brand-100 to-teal-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+      {/* Left accent bar */}
+      <div
+        className="absolute left-0 top-0 bottom-0 w-1 rounded-l-2xl"
+        style={{ background: st.color }}
+      />
+
+      <div className="pl-4 pr-4 py-3.5 flex items-center gap-3">
+        {/* Avatar */}
+        <div
+          className="w-12 h-12 rounded-2xl flex items-center justify-center flex-shrink-0 text-xl"
+          style={{ background: `linear-gradient(135deg, ${st.bg}, ${st.bg}cc)` }}
+        >
           📦
         </div>
 
         {/* Info */}
         <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-bold text-gray-900 truncate text-base">{delivery.name}</h3>
+          <div className="flex items-center justify-between gap-2 mb-0.5">
+            <h3 className="font-bold text-gray-900 truncate text-[15px] tracking-tight">{delivery.name}</h3>
             <button
               onClick={e => { e.stopPropagation(); setShowActions(v => !v) }}
-              className="text-gray-400 p-1 flex-shrink-0 -mt-1"
+              className="w-7 h-7 flex items-center justify-center text-gray-300 hover:text-gray-500 flex-shrink-0 rounded-full hover:bg-gray-100 transition-colors"
             >
-              ⋮
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="12" cy="5" r="1.5"/><circle cx="12" cy="12" r="1.5"/><circle cx="12" cy="19" r="1.5"/>
+              </svg>
             </button>
           </div>
-          <div className="flex items-center gap-1 mt-0.5">
-            <span className="text-xs text-gray-500">📍 {delivery.prefecture}</span>
+
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="text-xs text-gray-400 flex items-center gap-0.5">
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" className="text-gray-300">
+                <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/>
+              </svg>
+              {delivery.prefecture}
+            </span>
+            <span
+              className="text-[11px] font-bold px-2 py-0.5 rounded-full"
+              style={{ color: st.color, background: st.bg }}
+            >
+              {delivery.product}
+            </span>
+            <span
+              className="text-[10px] font-semibold px-1.5 py-0.5 rounded-full ml-auto"
+              style={{ color: st.color, background: st.bg }}
+            >
+              {st.label}
+            </span>
           </div>
-          <span className="inline-block mt-1 text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
-            {delivery.product}
-          </span>
         </div>
+
+        {/* Chevron */}
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="text-gray-300 flex-shrink-0">
+          <path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+        </svg>
       </div>
 
-      {/* Actions dropdown */}
+      {/* Actions */}
       {showActions && (
-        <div className="mt-3 flex gap-2 border-t border-gray-100 pt-3" onClick={e => e.stopPropagation()}>
+        <div
+          className="flex gap-2 px-4 pb-3 border-t border-gray-50 pt-2.5"
+          onClick={e => e.stopPropagation()}
+        >
           <button
             onClick={() => { setShowActions(false); onTap() }}
-            className="flex-1 py-2 bg-brand-50 text-brand-700 rounded-lg text-xs font-semibold"
+            className="flex-1 py-2 bg-brand-50 text-brand-600 rounded-xl text-xs font-bold"
           >
-            詳細を見る
+            詳細を見る →
           </button>
           <button
             onClick={() => { setShowActions(false); onDelete() }}
-            className="flex-1 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-semibold"
+            className="flex-1 py-2 bg-red-50 text-red-500 rounded-xl text-xs font-bold"
           >
             削除
           </button>
         </div>
       )}
-    </GlassCard>
+    </div>
   )
 }

@@ -151,7 +151,7 @@ export function CreatePage() {
         {/* Form Fields */}
         <GlassCard className="p-4 space-y-4">
           <FormField
-            label="📦 納品先名 *"
+            label="納品先名"
             value={form.name}
             onChange={v => update('name', v)}
             placeholder="例: 山田商店"
@@ -159,15 +159,15 @@ export function CreatePage() {
           />
           <div className="grid grid-cols-2 gap-3">
             <FormField
-              label="📍 都道府県 *"
+              label="都道府県"
               value={form.prefecture}
               onChange={v => update('prefecture', v)}
               placeholder="例: 東京都"
               required
             />
             <div>
-              <label className="text-xs font-semibold text-gray-500">
-                🛒 商品名 <span className="text-red-400">*</span>
+              <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase">
+                商品名 <span className="text-red-400">*</span>
               </label>
               <select
                 value={form.product}
@@ -175,9 +175,9 @@ export function CreatePage() {
                 required
                 className="
                   w-full mt-1 px-3 py-2.5 text-sm
-                  bg-gray-50 border border-gray-200 rounded-xl
-                  focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent
-                  transition-all appearance-none
+                  bg-[#f5f5f7] border border-transparent rounded-xl
+                  focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white
+                  transition-all appearance-none text-gray-900 text-sm placeholder-gray-300
                 "
               >
                 <option value="">選択してください</option>
@@ -190,7 +190,7 @@ export function CreatePage() {
             </div>
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-500">🏠 住所 *</label>
+            <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase">住所 *</label>
             <div className="flex gap-2 mt-1">
               <input
                 type="text"
@@ -198,13 +198,13 @@ export function CreatePage() {
                 onChange={e => { update('address', e.target.value); setGeocoded(false) }}
                 placeholder="東京都渋谷区道玄坂1-1-1"
                 required
-                className="flex-1 px-3 py-2.5 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400"
+                className="flex-1 px-3.5 py-3 text-sm text-gray-900 bg-[#f5f5f7] border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white transition-all placeholder-gray-300"
               />
               <button
                 type="button"
                 onClick={handleGeocode}
                 disabled={isGeocoding || !form.address}
-                className="px-3 py-2.5 bg-brand-100 text-brand-700 rounded-xl text-xs font-semibold disabled:opacity-50 flex-shrink-0"
+                className="px-3 py-3 bg-brand-500 text-white rounded-xl text-xs font-bold disabled:opacity-40 flex-shrink-0 shadow-sm"
               >
                 {isGeocoding ? '🔄' : '📍取得'}
               </button>
@@ -216,8 +216,8 @@ export function CreatePage() {
             )}
           </div>
           <div>
-            <label className="text-xs font-semibold text-gray-500 flex items-center gap-1">
-              🌐 ウェブサイト
+            <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase flex items-center gap-1">
+              ウェブサイト
               {form.website && geocoded && (
                 <span className="text-[10px] text-brand-500 font-normal">（住所から自動取得）</span>
               )}
@@ -228,10 +228,10 @@ export function CreatePage() {
               onChange={e => update('website', e.target.value)}
               placeholder="https://example.com"
               className="
-                w-full mt-1 px-3 py-2.5 text-sm
-                bg-gray-50 border border-gray-200 rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent
-                transition-all
+                w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
+                bg-[#f5f5f7] border border-transparent rounded-xl
+                focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white
+                transition-all placeholder-gray-300
               "
             />
           </div>
@@ -279,7 +279,7 @@ function FormField({ label, value, onChange, placeholder, required, type = 'text
 }) {
   return (
     <div>
-      <label className="text-xs font-semibold text-gray-500">
+      <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase">
         {label}
         {required && <span className="text-red-400 ml-0.5">*</span>}
       </label>
@@ -290,10 +290,10 @@ function FormField({ label, value, onChange, placeholder, required, type = 'text
         placeholder={placeholder}
         required={required}
         className="
-          w-full mt-1 px-3 py-2.5 text-sm
-          bg-gray-50 border border-gray-200 rounded-xl
-          focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent
-          transition-all
+          w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
+          bg-[#f5f5f7] border border-transparent rounded-xl
+          focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white focus:border-transparent
+          transition-all placeholder-gray-300
         "
       />
     </div>

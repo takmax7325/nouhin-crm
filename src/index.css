@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ── iOS Safari fixes ───────────────────────────── */
+/* ── Base ────────────────────────────────────────── */
 * {
   -webkit-tap-highlight-color: transparent;
   -webkit-touch-callout: none;
@@ -13,14 +13,17 @@ html, body, #root {
   overflow: hidden;
   position: fixed;
   width: 100%;
-  /* prevent iOS rubber-band scroll on the root */
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* ── Scrollbar hide ──────────────────────────────── */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* ── Leaflet overrides ───────────────────────────── */
+/* ── Leaflet ─────────────────────────────────────── */
 .leaflet-container {
   height: 100% !important;
   width: 100% !important;
@@ -28,45 +31,68 @@ html, body, #root {
 }
 .leaflet-control-attribution {
   font-size: 9px !important;
-  opacity: 0.7;
+  opacity: 0.5;
+  background: rgba(255,255,255,0.7) !important;
+  backdrop-filter: blur(8px);
+  border-radius: 8px !important;
 }
 
 /* ── Glass morphism ──────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.4);
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 18px;
 }
 
-/* ── Shimmer animation ───────────────────────────── */
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-.animate-shimmer {
-  background: linear-gradient(90deg, #f0f0f0 25%, #e8e8e8 50%, #f0f0f0 75%);
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-/* ── Safe area padding for bottom nav ────────────── */
-.pb-safe {
-  padding-bottom: env(safe-area-inset-bottom);
-}
-
-/* ── Overscroll fix ──────────────────────────────── */
+/* ── Overscroll ──────────────────────────────────── */
 .overscroll-contain {
   overscroll-behavior: contain;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── Input appearance ────────────────────────────── */
-input[type="date"] {
-  -webkit-appearance: none;
-  appearance: none;
+/* ── Input ───────────────────────────────────────── */
+input[type="date"] { -webkit-appearance: none; appearance: none; }
+input[type="search"]::-webkit-search-cancel-button { -webkit-appearance: none; }
+select { -webkit-appearance: none; appearance: none; }
+
+/* ── Animations ──────────────────────────────────── */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
 }
-input[type="search"]::-webkit-search-cancel-button {
-  -webkit-appearance: none;
+.animate-shimmer {
+  background: linear-gradient(90deg, #f5f5f7 25%, #ebebed 50%, #f5f5f7 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out both;
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.94); }
+  to   { opacity: 1; transform: scale(1); }
+}
+.animate-scale-in {
+  animation: scale-in 0.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-slide-up {
+  animation: slide-up 0.28s cubic-bezier(0.34, 1.2, 0.64, 1) both;
+}
+
+/* ── Safe area ───────────────────────────────────── */
+.pb-safe {
+  padding-bottom: env(safe-area-inset-bottom);
 }
