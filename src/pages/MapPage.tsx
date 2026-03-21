@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from 'react'
-import { MapContainer, TileLayer, useMap, useMapEvents } from 'react-leaflet'
+import { MapContainer, TileLayer, useMap, useMapEvents, Marker } from 'react-leaflet'
 import L from 'leaflet'
 import Supercluster from 'supercluster'
 import { useNavigate } from 'react-router-dom'
@@ -62,7 +62,7 @@ function ClusteredMarkers({ deliveries, onSelect }: ClusteredMarkersProps) {
       if (isCluster && cluster_id !== undefined) {
         const icon = createIcon('#0ea5e9', point_count)
         return (
-          <L.Marker
+          <Marker
             key={`c-${cluster_id}`}
             position={[lat, lng]}
             icon={icon}
@@ -80,7 +80,7 @@ function ClusteredMarkers({ deliveries, onSelect }: ClusteredMarkersProps) {
       if (!delivery) return null
 
       return (
-        <L.Marker
+        <Marker
           key={`d-${delivery.id}`}
           position={[delivery.lat, delivery.lng]}
           icon={deliveryIcon}
