@@ -94,11 +94,11 @@ export function CreatePage() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pb-36">
-      <form onSubmit={handleSubmit} className="p-4 space-y-4">
+    <div className="flex flex-col h-full overflow-y-auto overscroll-contain scrollbar-hide">
+      <form onSubmit={handleSubmit} className="p-4 space-y-4 pb-28">
         {/* Image Section */}
         <div>
-          <p className="text-xs font-semibold text-gray-500 mb-2">📷 画像 ({selectedImages.length}/5)</p>
+          <p className="text-xs font-semibold text-gray-500 mb-2">画像 ({selectedImages.length}/5)</p>
           <div className="flex gap-3 overflow-x-auto pb-2">
             {/* Add button */}
             {selectedImages.length < 5 && (
@@ -261,7 +261,7 @@ export function CreatePage() {
               <span className="w-4 h-4 border-2 border-white/40 border-t-white rounded-full animate-spin" />
               保存中...
             </span>
-          ) : '✅ 保存する'}
+          ) : '保存する'}
         </button>
       </form>
     </div>
