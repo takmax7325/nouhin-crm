@@ -106,9 +106,9 @@ export function CreatePage() {
                 type="button"
                 onClick={() => fileRef.current?.click()}
                 className="
-                  flex-shrink-0 w-24 h-24 border-2 border-dashed border-brand-300
+                  flex-shrink-0 w-24 h-24 border-2 border-dashed border-sky-300
                   rounded-xl flex flex-col items-center justify-center
-                  text-brand-500 bg-brand-50 active:scale-95 transition-transform
+                  text-sky-500 bg-sky-50 active:scale-95 transition-transform
                 "
               >
                 <span className="text-2xl">＋</span>
@@ -121,7 +121,7 @@ export function CreatePage() {
               <div key={i} className="relative flex-shrink-0">
                 <img src={src} alt="" className="w-24 h-24 object-cover rounded-xl" />
                 {i === 0 && (
-                  <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-brand-500 text-white text-[9px] font-bold rounded-md">
+                  <span className="absolute bottom-1 left-1 px-1.5 py-0.5 bg-[#1e3a8a] text-white text-[9px] font-bold rounded-md">
                     メイン
                   </span>
                 )}
@@ -176,7 +176,7 @@ export function CreatePage() {
                 className="
                   w-full mt-1 px-3 py-2.5 text-sm
                   bg-[#f5f5f7] border border-transparent rounded-xl
-                  focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white
+                  focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white
                   transition-all appearance-none text-gray-900 text-sm placeholder-gray-300
                 "
               >
@@ -198,19 +198,19 @@ export function CreatePage() {
                 onChange={e => { update('address', e.target.value); setGeocoded(false) }}
                 placeholder="東京都渋谷区道玄坂1-1-1"
                 required
-                className="flex-1 px-3.5 py-3 text-sm text-gray-900 bg-[#f5f5f7] border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white transition-all placeholder-gray-300"
+                className="flex-1 px-3.5 py-3 text-sm text-gray-900 bg-[#f5f5f7] border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all placeholder-gray-300"
               />
               <button
                 type="button"
                 onClick={handleGeocode}
                 disabled={isGeocoding || !form.address}
-                className="px-3 py-3 bg-brand-500 text-white rounded-xl text-xs font-bold disabled:opacity-40 flex-shrink-0 shadow-sm"
+                className="px-3 py-3 bg-[#1e3a8a] text-white rounded-xl text-xs font-bold disabled:opacity-40 flex-shrink-0 shadow-sm"
               >
                 {isGeocoding ? '🔄' : '📍取得'}
               </button>
             </div>
             {geocoded && (
-              <p className="text-xs text-brand-600 mt-1 flex items-center gap-1">
+              <p className="text-xs text-sky-600 mt-1 flex items-center gap-1">
                 ✅ 位置情報を取得しました
               </p>
             )}
@@ -219,7 +219,7 @@ export function CreatePage() {
             <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase flex items-center gap-1">
               ウェブサイト
               {form.website && geocoded && (
-                <span className="text-[10px] text-brand-500 font-normal">（住所から自動取得）</span>
+                <span className="text-[10px] text-sky-500 font-normal">（住所から自動取得）</span>
               )}
             </label>
             <input
@@ -230,7 +230,7 @@ export function CreatePage() {
               className="
                 w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
                 bg-[#f5f5f7] border border-transparent rounded-xl
-                focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white
+                focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white
                 transition-all placeholder-gray-300
               "
             />
@@ -250,8 +250,8 @@ export function CreatePage() {
           disabled={!isValid || isSaving}
           className="
             w-full py-4 rounded-2xl font-bold text-white text-base
-            bg-gradient-to-r from-brand-500 to-teal-500
-            shadow-lg shadow-brand-300/40
+            bg-[#1e3a8a]
+            shadow-lg shadow-blue-900/30
             active:scale-[0.98] transition-all duration-150
             disabled:opacity-50 disabled:cursor-not-allowed
           "
@@ -292,7 +292,7 @@ function FormField({ label, value, onChange, placeholder, required, type = 'text
         className="
           w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
           bg-[#f5f5f7] border border-transparent rounded-xl
-          focus:outline-none focus:ring-2 focus:ring-brand-400 focus:bg-white focus:border-transparent
+          focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white focus:border-transparent
           transition-all placeholder-gray-300
         "
       />

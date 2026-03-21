@@ -28,7 +28,7 @@ export function ListPage() {
   return (
     <div className="flex flex-col h-full overflow-hidden">
       {/* Search & Filter */}
-      <div className="px-4 pt-2 pb-3 space-y-2 bg-white/60 backdrop-blur-sm border-b border-gray-100">
+      <div className="px-4 pt-2 pb-3 space-y-2 bg-white border-b border-sky-100">
         <SearchBar
           value={filter.search}
           onChange={v => setFilter(f => ({ ...f, search: v }))}
@@ -46,7 +46,7 @@ export function ListPage() {
             <span className="text-xs text-gray-500">{filtered.length}件</span>
             <button
               onClick={() => setFilter({ search: '', prefecture: null, product: null })}
-              className="text-xs text-brand-600 font-semibold"
+              className="text-xs text-[#1e3a8a] font-semibold"
             >
               クリア
             </button>
@@ -58,7 +58,7 @@ export function ListPage() {
       {error && (
         <div className="px-4 py-2 bg-orange-50 border-b border-orange-200 flex items-center justify-between">
           <span className="text-xs text-orange-600">⚠️ データの取得に失敗しました（キャッシュ表示中）</span>
-          <button onClick={refetch} className="text-xs text-brand-600 font-semibold ml-2">再試行</button>
+          <button onClick={refetch} className="text-xs text-[#1e3a8a] font-semibold ml-2">再試行</button>
         </div>
       )}
 
@@ -221,7 +221,7 @@ function DeliveryRow({ delivery, onTap, onDelete }: DeliveryRowProps) {
         >
           <button
             onClick={() => { setShowActions(false); onTap() }}
-            className="flex-1 py-2 bg-brand-50 text-brand-600 rounded-xl text-xs font-bold"
+            className="flex-1 py-2 bg-brand-50 text-[#1e3a8a] rounded-xl text-xs font-bold"
           >
             詳細を見る →
           </button>

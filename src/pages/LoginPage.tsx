@@ -28,42 +28,32 @@ export function LoginPage() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
 
-      {/* ── Aurora background ── */}
-      <div className="absolute inset-0 bg-[#0a0a1a]" />
-      <div className="absolute inset-0 opacity-60"
-        style={{ background: 'radial-gradient(ellipse 80% 60% at 50% -10%, #22c55e55 0%, transparent 70%)' }} />
-      <div className="absolute inset-0 opacity-40"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at -10% 60%, #14b8a655 0%, transparent 70%)' }} />
+      {/* ── Sky blue gradient background ── */}
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-300 via-blue-400 to-[#1e3a8a]" />
       <div className="absolute inset-0 opacity-30"
-        style={{ background: 'radial-gradient(ellipse 60% 50% at 110% 40%, #3b82f655 0%, transparent 70%)' }} />
-
-      {/* Grid overlay */}
-      <div className="absolute inset-0 opacity-[0.03]"
-        style={{ backgroundImage: 'linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
+        style={{ background: 'radial-gradient(ellipse 70% 50% at 20% 80%, #bae6fd55 0%, transparent 60%)' }} />
+      <div className="absolute inset-0 opacity-20"
+        style={{ background: 'radial-gradient(ellipse 60% 40% at 80% 10%, #e0f2fe55 0%, transparent 60%)' }} />
 
       <div className="relative w-full max-w-sm px-6 py-10">
 
         {/* ── Logo ── */}
         <div className="flex flex-col items-center mb-10">
           <div className="relative mb-5">
-            <div className="absolute inset-0 rounded-3xl bg-brand-500/30 blur-xl scale-150" />
-            <div className="relative w-20 h-20 bg-white/10 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/20 shadow-2xl">
+            <div className="absolute inset-0 rounded-3xl bg-white/30 blur-xl scale-150" />
+            <div className="relative w-20 h-20 bg-white/20 backdrop-blur-xl rounded-3xl flex items-center justify-center border border-white/40 shadow-2xl">
               <span className="text-4xl">📦</span>
             </div>
           </div>
-          <h1 className="text-[28px] font-bold text-white tracking-tight">納品管理CRM</h1>
-          <p className="text-white/40 text-sm mt-1 tracking-widest uppercase font-medium">Map Edition</p>
+          <h1 className="text-[28px] font-bold text-white tracking-tight drop-shadow-sm">納品管理CRM</h1>
+          <p className="text-white/60 text-sm mt-1 tracking-widest uppercase font-medium">Map Edition</p>
         </div>
 
         {/* ── Card ── */}
-        <div className="bg-white/[0.07] backdrop-blur-2xl rounded-3xl border border-white/[0.12] shadow-2xl overflow-hidden">
-
-          {/* Card inner glow */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3/4 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
-
+        <div className="bg-white rounded-3xl shadow-2xl shadow-blue-900/20 overflow-hidden">
           <div className="p-6">
             {error && (
-              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/20 rounded-xl text-sm text-red-300 flex items-center gap-2">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600 flex items-center gap-2">
                 <span className="text-base">⚠️</span>
                 <span>{error}</span>
               </div>
@@ -72,7 +62,7 @@ export function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-4">
               {/* Email */}
               <div>
-                <label className="block text-xs font-semibold text-white/50 mb-2 tracking-wide uppercase">
+                <label className="block text-xs font-semibold text-gray-400 mb-2 tracking-wide uppercase">
                   メールアドレス
                 </label>
                 <input
@@ -83,9 +73,9 @@ export function LoginPage() {
                   autoComplete="email"
                   className="
                     w-full px-4 py-3.5 rounded-2xl
-                    bg-white/[0.08] border border-white/[0.12]
-                    text-sm text-white placeholder-white/25
-                    focus:outline-none focus:ring-2 focus:ring-brand-400/60 focus:border-brand-400/60
+                    bg-sky-50 border border-sky-100
+                    text-sm text-gray-800 placeholder-gray-300
+                    focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400
                     transition-all
                   "
                 />
@@ -93,7 +83,7 @@ export function LoginPage() {
 
               {/* Password */}
               <div>
-                <label className="block text-xs font-semibold text-white/50 mb-2 tracking-wide uppercase">
+                <label className="block text-xs font-semibold text-gray-400 mb-2 tracking-wide uppercase">
                   パスワード
                 </label>
                 <div className="relative">
@@ -105,16 +95,16 @@ export function LoginPage() {
                     autoComplete="current-password"
                     className="
                       w-full px-4 py-3.5 pr-12 rounded-2xl
-                      bg-white/[0.08] border border-white/[0.12]
-                      text-sm text-white placeholder-white/25
-                      focus:outline-none focus:ring-2 focus:ring-brand-400/60 focus:border-brand-400/60
+                      bg-sky-50 border border-sky-100
+                      text-sm text-gray-800 placeholder-gray-300
+                      focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400
                       transition-all
                     "
                   />
                   <button
                     type="button"
                     onClick={() => setShowPw(v => !v)}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition-colors"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   >
                     {showPw ? (
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -136,14 +126,13 @@ export function LoginPage() {
                 disabled={isLoading}
                 className="
                   w-full py-4 rounded-2xl font-bold text-white text-[15px]
-                  bg-gradient-to-r from-brand-500 to-teal-500
-                  shadow-lg shadow-brand-500/30
+                  bg-[#1e3a8a]
+                  shadow-lg shadow-blue-900/30
                   active:scale-[0.98] transition-all duration-150
                   disabled:opacity-50 disabled:cursor-not-allowed
-                  mt-2 relative overflow-hidden
+                  mt-2
                 "
               >
-                <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%]" />
                 {isLoading ? (
                   <span className="flex items-center justify-center gap-2">
                     <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
@@ -155,7 +144,7 @@ export function LoginPage() {
           </div>
         </div>
 
-        <p className="text-center text-white/20 text-xs mt-6">
+        <p className="text-center text-white/40 text-xs mt-6">
           © 2025 納品管理CRM
         </p>
       </div>
