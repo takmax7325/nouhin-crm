@@ -71,8 +71,7 @@ export function ListPage() {
         ) : filtered.length === 0 ? (
           <EmptyState
             title={isFiltering ? '見つかりませんでした' : '納品先がありません'}
-            subtitle={isFiltering ? '検索条件を変えてみてください' : '右下の＋から登録しましょう'}
-            emoji={isFiltering ? '🔍' : '📦'}
+            subtitle={isFiltering ? '検索条件を変えてみてください' : '下の＋から登録しましょう'}
             action={!isFiltering ? { label: '＋ 新規登録', onClick: () => navigate('/create') } : undefined}
           />
         ) : (

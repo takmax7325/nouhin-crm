@@ -1,117 +1,121 @@
 import { NavLink, useLocation } from 'react-router-dom'
 
-// ── SVG Icons ─────────────────────────────────────
-const MapIcon = ({ active }: { active: boolean }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
+// ── Icons ──────────────────────────────────────────
+const ListIcon = ({ active }: { active: boolean }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
     {active ? (
       <>
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="currentColor"/>
+        <rect x="3" y="5"    width="18" height="2.5" rx="1.25" fill="#1e3a8a"/>
+        <rect x="3" y="10.75" width="18" height="2.5" rx="1.25" fill="#1e3a8a"/>
+        <rect x="3" y="16.5" width="18" height="2.5" rx="1.25" fill="#1e3a8a"/>
+      </>
+    ) : (
+      <>
+        <rect x="3" y="5"    width="18" height="2.5" rx="1.25" fill="#9ca3af"/>
+        <rect x="3" y="10.75" width="18" height="2.5" rx="1.25" fill="#9ca3af"/>
+        <rect x="3" y="16.5" width="18" height="2.5" rx="1.25" fill="#9ca3af"/>
+      </>
+    )}
+  </svg>
+)
+
+const PlusIcon = ({ active }: { active: boolean }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    <rect x="2" y="2" width="20" height="20" rx="6"
+      fill={active ? '#1e3a8a' : '#e5e7eb'}
+    />
+    <path d="M12 7v10M7 12h10" stroke={active ? 'white' : '#6b7280'} strokeWidth="2.2" strokeLinecap="round"/>
+  </svg>
+)
+
+const MapIcon = ({ active }: { active: boolean }) => (
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+    {active ? (
+      <>
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#1e3a8a"/>
         <circle cx="12" cy="9" r="2.5" fill="white"/>
       </>
     ) : (
       <>
-        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="currentColor" strokeWidth="1.8" fill="none"/>
-        <circle cx="12" cy="9" r="2.5" stroke="currentColor" strokeWidth="1.8" fill="none"/>
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" stroke="#9ca3af" strokeWidth="1.8" fill="none"/>
+        <circle cx="12" cy="9" r="2.5" stroke="#9ca3af" strokeWidth="1.8" fill="none"/>
       </>
     )}
   </svg>
 )
 
-const ListIcon = ({ active }: { active: boolean }) => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-    {active ? (
-      <>
-        <rect x="3" y="5" width="18" height="2.5" rx="1.25" fill="currentColor"/>
-        <rect x="3" y="10.75" width="18" height="2.5" rx="1.25" fill="currentColor"/>
-        <rect x="3" y="16.5" width="18" height="2.5" rx="1.25" fill="currentColor"/>
-      </>
-    ) : (
-      <>
-        <rect x="3" y="5" width="18" height="2.5" rx="1.25" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-        <rect x="3" y="10.75" width="18" height="2.5" rx="1.25" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-        <rect x="3" y="16.5" width="18" height="2.5" rx="1.25" stroke="currentColor" strokeWidth="1.5" fill="none"/>
-      </>
-    )}
-  </svg>
-)
-
-const PlusIcon = () => (
-  <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-    <path d="M12 5v14M5 12h14" stroke="white" strokeWidth="2.5" strokeLinecap="round"/>
-  </svg>
-)
-
-// ── Bottom Nav ─────────────────────────────────────
+// ── Bottom Nav (Macy's style) ──────────────────────
 export function BottomNav() {
   const location = useLocation()
-  const isMap    = location.pathname === '/map'
   const isList   = location.pathname === '/list'
   const isCreate = location.pathname === '/create'
+  const isMap    = location.pathname === '/map'
 
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 z-40 bg-white border-t border-sky-100"
+      className="fixed bottom-0 left-0 right-0 z-40 bg-white"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      <div className="flex items-center h-[60px]">
+      {/* Top shadow line */}
+      <div className="h-px bg-gray-200" />
 
-        {/* 地図 */}
-        <NavLink
-          to="/map"
-          className={`
-            flex-1 flex flex-col items-center justify-center gap-0.5
-            h-full transition-all duration-200 active:scale-95
-            ${isMap ? 'text-[#1e3a8a]' : 'text-gray-400'}
-          `}
-        >
-          <MapIcon active={isMap} />
-          <span className={`text-[10px] font-semibold tracking-tight ${isMap ? 'text-[#1e3a8a]' : 'text-gray-400'}`}>
-            地図
-          </span>
-          {isMap && (
-            <span className="absolute bottom-2 w-1 h-1 rounded-full bg-[#1e3a8a]" />
-          )}
-        </NavLink>
+      <div className="flex items-stretch h-[56px]">
 
-        {/* 新規 — center */}
-        <NavLink
-          to="/create"
-          className="flex-1 flex flex-col items-center justify-center gap-0.5 h-full transition-all duration-200 active:scale-95"
-        >
-          <div
-            className={`
-              w-12 h-12 rounded-2xl flex items-center justify-center
-              shadow-[0_4px_14px_rgba(30,58,138,0.35)]
-              transition-all duration-200
-              ${isCreate ? 'bg-[#172554] scale-95' : 'bg-[#1e3a8a]'}
-            `}
-          >
-            <PlusIcon />
-          </div>
-          <span className={`text-[10px] font-semibold tracking-tight -mt-0.5 ${isCreate ? 'text-[#1e3a8a]' : 'text-gray-400'}`}>
-            新規
-          </span>
-        </NavLink>
-
-        {/* 一覧 */}
-        <NavLink
-          to="/list"
-          className={`
-            flex-1 flex flex-col items-center justify-center gap-0.5
-            h-full transition-all duration-200 active:scale-95
-            ${isList ? 'text-[#1e3a8a]' : 'text-gray-400'}
-          `}
-        >
+        {/* 一覧（左） */}
+        <TabItem to="/list" label="一覧" active={isList}>
           <ListIcon active={isList} />
-          <span className={`text-[10px] font-semibold tracking-tight ${isList ? 'text-[#1e3a8a]' : 'text-gray-400'}`}>
-            一覧
-          </span>
-          {isList && (
-            <span className="absolute bottom-2 w-1 h-1 rounded-full bg-[#1e3a8a]" />
-          )}
-        </NavLink>
+        </TabItem>
+
+        {/* 新規（中央） */}
+        <TabItem to="/create" label="新規" active={isCreate}>
+          <PlusIcon active={isCreate} />
+        </TabItem>
+
+        {/* 地図（右） */}
+        <TabItem to="/map" label="地図" active={isMap}>
+          <MapIcon active={isMap} />
+        </TabItem>
 
       </div>
     </nav>
+  )
+}
+
+// ── Tab Item ───────────────────────────────────────
+function TabItem({
+  to,
+  label,
+  active,
+  children,
+}: {
+  to: string
+  label: string
+  active: boolean
+  children: React.ReactNode
+}) {
+  return (
+    <NavLink
+      to={to}
+      className="relative flex-1 flex flex-col items-center justify-center gap-0.5 active:bg-sky-50 transition-colors duration-150"
+    >
+      {/* Macy's-style top indicator bar */}
+      <span
+        className="absolute top-0 left-3 right-3 h-[3px] rounded-b-full transition-all duration-200"
+        style={{ background: active ? '#1e3a8a' : 'transparent' }}
+      />
+
+      {/* Icon */}
+      <span className="transition-transform duration-150" style={{ transform: active ? 'scale(1.08)' : 'scale(1)' }}>
+        {children}
+      </span>
+
+      {/* Label */}
+      <span
+        className="text-[10px] font-semibold tracking-tight transition-colors duration-150"
+        style={{ color: active ? '#1e3a8a' : '#9ca3af' }}
+      >
+        {label}
+      </span>
+    </NavLink>
   )
 }

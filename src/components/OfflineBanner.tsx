@@ -58,16 +58,15 @@ interface EmptyStateProps {
   action?: { label: string; onClick: () => void }
 }
 
-export function EmptyState({ title, subtitle, emoji = '📦', action }: EmptyStateProps) {
+export function EmptyState({ title, subtitle, action }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center py-20 px-8 text-center animate-fade-in">
-      <div className="text-6xl mb-4">{emoji}</div>
       <h3 className="text-lg font-bold text-gray-700 mb-2">{title}</h3>
       {subtitle && <p className="text-sm text-gray-400 mb-6">{subtitle}</p>}
       {action && (
         <button
           onClick={action.onClick}
-          className="px-6 py-2.5 bg-brand-500 text-white rounded-full font-semibold text-sm shadow-md active:scale-95 transition-transform"
+          className="px-6 py-2.5 bg-[#1e3a8a] text-white rounded-full font-semibold text-sm shadow-md active:scale-95 transition-transform"
         >
           {action.label}
         </button>
