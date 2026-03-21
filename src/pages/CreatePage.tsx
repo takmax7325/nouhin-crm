@@ -245,7 +245,7 @@ export function CreatePage() {
       {/* ── Sticky footer ── */}
       <div
         className="flex-shrink-0 px-4 pt-3 pb-3 bg-[#f0f8ff] border-t border-sky-100"
-        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 72px)' }}
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 76px)' }}
       >
         {error && (
           <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
