@@ -1,6 +1,5 @@
 import { NavLink, useLocation } from 'react-router-dom'
 
-// ── Icons ──────────────────────────────────────────
 const ListIcon = ({ active }: { active: boolean }) => (
   <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
     <rect x="3" y="5"     width="18" height="2.5" rx="1.25" fill={active ? '#1e3a8a' : '#9ca3af'}/>
@@ -32,7 +31,6 @@ const MapIcon = ({ active }: { active: boolean }) => (
   </svg>
 )
 
-// ── Bottom Nav ────────────────────────────────────
 export function BottomNav() {
   const location = useLocation()
   const isList   = location.pathname === '/list'
@@ -41,65 +39,34 @@ export function BottomNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white">
-      {/* Top border */}
       <div className="h-px bg-gray-200" />
-
-      {/* ボタンエリア: 64px + safe-area分まで全て埋める */}
-      <div
-        className="flex items-stretch"
-        style={{ height: 'calc(64px + env(safe-area-inset-bottom))' }}
-      >
-        <TabItem to="/list"   label="一覧" active={isList}>
-          <ListIcon active={isList} />
-        </TabItem>
-        <TabItem to="/create" label="新規" active={isCreate}>
-          <PlusIcon active={isCreate} />
-        </TabItem>
-        <TabItem to="/map"    label="地図" active={isMap}>
-          <MapIcon active={isMap} />
-        </TabItem>
+      <div className="flex h-16">
+        <TabItem to="/list"   label="一覧" active={isList}>   <ListIcon active={isList} /></TabItem>
+        <TabItem to="/create" label="新規" active={isCreate}> <PlusIcon active={isCreate} /></TabItem>
+        <TabItem to="/map"    label="地図" active={isMap}>    <MapIcon  active={isMap} /></TabItem>
       </div>
+      <div className="bg-white" style={{ height: 'env(safe-area-inset-bottom)' }} />
     </nav>
   )
 }
 
-// ── Tab Item ──────────────────────────────────────
 function TabItem({
   to, label, active, children,
-}: {
-  to: string; label: string; active: boolean; children: React.ReactNode
-}) {
+}: { to: string; label: string; active: boolean; children: React.ReactNode }) {
   return (
     <NavLink
       to={to}
-      className="relative flex-1 flex flex-col items-center transition-all duration-150"
-      style={{ paddingTop: '10px', paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)' }}
+      className="relative flex-1 flex flex-col items-center justify-center gap-[3px] transition-all duration-150"
     >
-      {/* Active: top indicator bar */}
       <span
         className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full transition-all duration-200"
         style={{ background: active ? '#1e3a8a' : 'transparent' }}
       />
-
-      {/* Active: background highlight pill */}
-      {active && (
-        <span
-          className="absolute left-3 right-3 top-1 rounded-2xl bg-sky-50"
-          style={{ bottom: 'calc(env(safe-area-inset-bottom) + 4px)' }}
-        />
-      )}
-
-      {/* Icon */}
-      <span className="relative transition-transform duration-150"
-        style={{ transform: active ? 'scale(1.1)' : 'scale(1)' }}>
+      {active && <span className="absolute inset-x-3 inset-y-1 rounded-2xl bg-sky-50" />}
+      <span className="relative" style={{ transform: active ? 'scale(1.08)' : 'scale(1)', transition: 'transform 0.15s' }}>
         {children}
       </span>
-
-      {/* Label */}
-      <span
-        className="relative text-[12px] font-bold tracking-tight transition-colors duration-150"
-        style={{ color: active ? '#1e3a8a' : '#9ca3af' }}
-      >
+      <span className="relative text-[11px] font-bold tracking-tight" style={{ color: active ? '#1e3a8a' : '#9ca3af' }}>
         {label}
       </span>
     </NavLink>
