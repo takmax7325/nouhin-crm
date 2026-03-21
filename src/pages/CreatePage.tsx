@@ -94,8 +94,11 @@ export function CreatePage() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain scrollbar-hide">
-      <form onSubmit={handleSubmit} className="p-4 space-y-4 pb-28">
+    <div className="flex flex-col h-full">
+      <form onSubmit={handleSubmit} className="flex flex-col flex-1 min-h-0">
+
+      {/* ── Scrollable fields ── */}
+      <div className="flex-1 overflow-y-auto overscroll-contain scrollbar-hide p-4 space-y-4 pb-4">
         {/* Image Section */}
         <div>
           <p className="text-xs font-semibold text-gray-500 mb-2">画像 ({selectedImages.length}/5)</p>
@@ -237,14 +240,18 @@ export function CreatePage() {
           </div>
         </GlassCard>
 
-        {/* Error */}
+      </div>{/* end scrollable */}
+
+      {/* ── Sticky footer ── */}
+      <div
+        className="flex-shrink-0 px-4 pt-3 pb-3 bg-[#f0f8ff] border-t border-sky-100"
+        style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 72px)' }}
+      >
         {error && (
-          <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
+          <div className="mb-3 p-3 bg-red-50 border border-red-200 rounded-xl text-sm text-red-600">
             ⚠️ {error}
           </div>
         )}
-
-        {/* Submit */}
         <button
           type="submit"
           disabled={!isValid || isSaving}
@@ -263,6 +270,8 @@ export function CreatePage() {
             </span>
           ) : '保存する'}
         </button>
+      </div>
+
       </form>
     </div>
   )
