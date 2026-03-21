@@ -205,13 +205,15 @@ export const contactService = {
 }
 
 // ── Geocoding (Nominatim / OpenStreetMap) ──────────
-export const geocode = async (address: string): Promise<{ lat: number; lng: number } | null> => {
+export const geocode = async (address: string): Promise<{ lat: number; lng: number; website?: string } | null> => {
   try {
-    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&accept-language=ja`
+    const url = `https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(address)}&format=json&limit=1&accept-language=ja&extratags=1`
     const res = await fetch(url, { headers: { 'User-Agent': 'NouhinCRM/1.0' } })
     const data = await res.json()
     if (data[0]) {
-      return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon) }
+      const tags = data[0].extratags ?? {}
+      const website = tags['website'] || tags['contact:website'] || tags['url'] || ''
+      return { lat: parseFloat(data[0].lat), lng: parseFloat(data[0].lon), website }
     }
     return null
   } catch {

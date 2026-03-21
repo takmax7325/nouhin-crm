@@ -36,13 +36,19 @@ export function CreatePage() {
     })
   }
 
-  // Geocode address
+  // Geocode address + auto-fill website if found
   const handleGeocode = async () => {
     if (!form.address) return
     setIsGeocoding(true)
-    const coords = await geocode(form.address)
-    if (coords) {
-      setForm(prev => ({ ...prev, lat: coords.lat, lng: coords.lng }))
+    const result = await geocode(form.address)
+    if (result) {
+      setForm(prev => ({
+        ...prev,
+        lat: result.lat,
+        lng: result.lng,
+        // ウェブサイトが取得できた場合のみ上書き（すでに入力済みなら保持）
+        website: result.website && !prev.website ? result.website : prev.website,
+      }))
       setGeocoded(true)
     }
     setIsGeocoding(false)
@@ -58,8 +64,15 @@ export function CreatePage() {
 
     // Geocode if not done
     if (!geocoded) {
-      const coords = await geocode(form.address)
-      if (coords) setForm(prev => ({ ...prev, lat: coords.lat, lng: coords.lng }))
+      const result = await geocode(form.address)
+      if (result) {
+        setForm(prev => ({
+          ...prev,
+          lat: result.lat,
+          lng: result.lng,
+          website: result.website && !prev.website ? result.website : prev.website,
+        }))
+      }
     }
 
     try {
@@ -152,13 +165,29 @@ export function CreatePage() {
               placeholder="例: 東京都"
               required
             />
-            <FormField
-              label="🛒 商品名 *"
-              value={form.product}
-              onChange={v => update('product', v)}
-              placeholder="例: 米 5kg"
-              required
-            />
+            <div>
+              <label className="text-xs font-semibold text-gray-500">
+                🛒 商品名 <span className="text-red-400">*</span>
+              </label>
+              <select
+                value={form.product}
+                onChange={e => update('product', e.target.value)}
+                required
+                className="
+                  w-full mt-1 px-3 py-2.5 text-sm
+                  bg-gray-50 border border-gray-200 rounded-xl
+                  focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent
+                  transition-all appearance-none
+                "
+              >
+                <option value="">選択してください</option>
+                <option value="SS">SS</option>
+                <option value="S">S</option>
+                <option value="M">M</option>
+                <option value="L">L</option>
+                <option value="スクエア">スクエア</option>
+              </select>
+            </div>
           </div>
           <div>
             <label className="text-xs font-semibold text-gray-500">🏠 住所 *</label>
@@ -186,13 +215,26 @@ export function CreatePage() {
               </p>
             )}
           </div>
-          <FormField
-            label="🌐 ウェブサイト"
-            value={form.website}
-            onChange={v => update('website', v)}
-            placeholder="https://example.com"
-            type="url"
-          />
+          <div>
+            <label className="text-xs font-semibold text-gray-500 flex items-center gap-1">
+              🌐 ウェブサイト
+              {form.website && geocoded && (
+                <span className="text-[10px] text-brand-500 font-normal">（住所から自動取得）</span>
+              )}
+            </label>
+            <input
+              type="url"
+              value={form.website}
+              onChange={e => update('website', e.target.value)}
+              placeholder="https://example.com"
+              className="
+                w-full mt-1 px-3 py-2.5 text-sm
+                bg-gray-50 border border-gray-200 rounded-xl
+                focus:outline-none focus:ring-2 focus:ring-brand-400 focus:border-transparent
+                transition-all
+              "
+            />
+          </div>
         </GlassCard>
 
         {/* Error */}
