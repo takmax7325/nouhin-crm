@@ -1,0 +1,190 @@
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useDeliveries, filterDeliveries } from '../hooks/useDeliveries'
+import { SearchBar, FilterBar } from '../components/SearchBar'
+import { ListSkeleton } from '../components/Skeleton'
+import { EmptyState } from '../components/OfflineBanner'
+import { GlassCard } from '../components/GlassCard'
+import type { FilterState, Delivery } from '../types'
+
+export function ListPage() {
+  const { deliveries, isLoading, error, refetch, deleteDelivery } = useDeliveries()
+  const [filter, setFilter] = useState<FilterState>({ search: '', prefecture: null, product: null })
+  const [deleteConfirm, setDeleteConfirm] = useState<Delivery | null>(null)
+  const navigate = useNavigate()
+
+  const filtered = filterDeliveries(deliveries, filter)
+
+  const prefectures = [...new Set(deliveries.map(d => d.prefecture))].sort()
+  const products = [...new Set(deliveries.map(d => d.product))].sort()
+
+  const handleDelete = async (d: Delivery) => {
+    await deleteDelivery(d.id)
+    setDeleteConfirm(null)
+  }
+
+  const isFiltering = filter.search || filter.prefecture || filter.product
+
+  return (
+    <div className="flex flex-col h-full overflow-hidden">
+      {/* Search & Filter */}
+      <div className="px-4 pt-2 pb-3 space-y-2 bg-white/60 backdrop-blur-sm border-b border-gray-100">
+        <SearchBar
+          value={filter.search}
+          onChange={v => setFilter(f => ({ ...f, search: v }))}
+        />
+        <FilterBar
+          prefectures={prefectures}
+          products={products}
+          selectedPrefecture={filter.prefecture}
+          selectedProduct={filter.product}
+          onPrefecture={v => setFilter(f => ({ ...f, prefecture: v }))}
+          onProduct={v => setFilter(f => ({ ...f, product: v }))}
+        />
+        {isFiltering && (
+          <div className="flex items-center justify-between">
+            <span className="text-xs text-gray-500">{filtered.length}件</span>
+            <button
+              onClick={() => setFilter({ search: '', prefecture: null, product: null })}
+              className="text-xs text-brand-600 font-semibold"
+            >
+              クリア
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Error */}
+      {error && (
+        <div className="px-4 py-2 bg-orange-50 border-b border-orange-200 flex items-center justify-between">
+          <span className="text-xs text-orange-600">⚠️ データの取得に失敗しました（キャッシュ表示中）</span>
+          <button onClick={refetch} className="text-xs text-brand-600 font-semibold ml-2">再試行</button>
+        </div>
+      )}
+
+      {/* List */}
+      <div className="flex-1 overflow-y-auto overscroll-contain">
+        {isLoading && deliveries.length === 0 ? (
+          <div className="pt-4">
+            <ListSkeleton />
+          </div>
+        ) : filtered.length === 0 ? (
+          <EmptyState
+            title={isFiltering ? '見つかりませんでした' : '納品先がありません'}
+            subtitle={isFiltering ? '検索条件を変えてみてください' : '右下の＋から登録しましょう'}
+            emoji={isFiltering ? '🔍' : '📦'}
+            action={!isFiltering ? { label: '＋ 新規登録', onClick: () => navigate('/create') } : undefined}
+          />
+        ) : (
+          <div className="p-4 space-y-3 pb-28">
+            {/* Pull to refresh hint */}
+            <div className="text-center">
+              <button onClick={refetch} className="text-xs text-gray-400 active:text-brand-500">
+                ↓ 引っ張って更新
+              </button>
+            </div>
+
+            {filtered.map(delivery => (
+              <DeliveryRow
+                key={delivery.id}
+                delivery={delivery}
+                onTap={() => navigate(`/delivery/${delivery.id}`)}
+                onDelete={() => setDeleteConfirm(delivery)}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      {/* Delete Confirm Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-6"
+          onClick={() => setDeleteConfirm(null)}>
+          <div
+            className="bg-white rounded-3xl p-6 w-full max-w-sm shadow-2xl animate-scale-in"
+            onClick={e => e.stopPropagation()}
+          >
+            <div className="text-center">
+              <div className="text-4xl mb-3">🗑️</div>
+              <h3 className="font-bold text-lg mb-1">削除確認</h3>
+              <p className="text-sm text-gray-500 mb-6">「{deleteConfirm.name}」を削除しますか？<br />この操作は取り消せません。</p>
+            </div>
+            <div className="flex gap-3">
+              <button onClick={() => setDeleteConfirm(null)}
+                className="flex-1 py-3 bg-gray-100 rounded-xl font-semibold text-gray-700">
+                キャンセル
+              </button>
+              <button onClick={() => handleDelete(deleteConfirm)}
+                className="flex-1 py-3 bg-red-500 text-white rounded-xl font-semibold">
+                削除
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+// ── Delivery Row ─────────────────────────────────
+interface DeliveryRowProps {
+  delivery: Delivery
+  onTap: () => void
+  onDelete: () => void
+}
+
+function DeliveryRow({ delivery, onTap, onDelete }: DeliveryRowProps) {
+  const [showActions, setShowActions] = useState(false)
+
+  return (
+    <GlassCard
+      className="p-4 animate-fade-in"
+      pressable
+      onClick={onTap}
+    >
+      <div className="flex items-center gap-3">
+        {/* Icon */}
+        <div className="w-14 h-14 bg-gradient-to-br from-brand-100 to-teal-50 rounded-xl flex items-center justify-center text-2xl flex-shrink-0">
+          📦
+        </div>
+
+        {/* Info */}
+        <div className="flex-1 min-w-0">
+          <div className="flex items-start justify-between gap-2">
+            <h3 className="font-bold text-gray-900 truncate text-base">{delivery.name}</h3>
+            <button
+              onClick={e => { e.stopPropagation(); setShowActions(v => !v) }}
+              className="text-gray-400 p-1 flex-shrink-0 -mt-1"
+            >
+              ⋮
+            </button>
+          </div>
+          <div className="flex items-center gap-1 mt-0.5">
+            <span className="text-xs text-gray-500">📍 {delivery.prefecture}</span>
+          </div>
+          <span className="inline-block mt-1 text-xs font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded-full">
+            {delivery.product}
+          </span>
+        </div>
+      </div>
+
+      {/* Actions dropdown */}
+      {showActions && (
+        <div className="mt-3 flex gap-2 border-t border-gray-100 pt-3" onClick={e => e.stopPropagation()}>
+          <button
+            onClick={() => { setShowActions(false); onTap() }}
+            className="flex-1 py-2 bg-brand-50 text-brand-700 rounded-lg text-xs font-semibold"
+          >
+            詳細を見る
+          </button>
+          <button
+            onClick={() => { setShowActions(false); onDelete() }}
+            className="flex-1 py-2 bg-red-50 text-red-600 rounded-lg text-xs font-semibold"
+          >
+            削除
+          </button>
+        </div>
+      )}
+    </GlassCard>
+  )
+}
