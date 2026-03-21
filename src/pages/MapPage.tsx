@@ -154,7 +154,7 @@ export function MapPage() {
       {/* Bottom Sheet */}
       {selected && (
         <div
-          className="absolute bottom-20 left-0 right-0 z-10 px-4 animate-slide-up"
+          className="absolute bottom-28 left-0 right-0 z-10 px-4 animate-slide-up"
           onClick={() => setSelected(null)}
         >
           <div onClick={e => e.stopPropagation()}>
@@ -202,7 +202,7 @@ export function MapPage() {
 function ZoomControl() {
   const map = useMap()
   return (
-    <div className="absolute bottom-28 right-3 z-10 flex flex-col gap-1">
+    <div className="absolute bottom-36 right-3 z-10 flex flex-col gap-1">
       <button
         onClick={() => map.zoomIn()}
         className="w-9 h-9 bg-white/90 backdrop-blur-sm rounded-xl shadow-md text-gray-700 font-bold text-lg flex items-center justify-center active:scale-90 transition-transform"

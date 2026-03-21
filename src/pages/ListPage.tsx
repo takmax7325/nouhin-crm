@@ -76,7 +76,7 @@ export function ListPage() {
             action={!isFiltering ? { label: '＋ 新規登録', onClick: () => navigate('/create') } : undefined}
           />
         ) : (
-          <div className="p-4 space-y-3 pb-28">
+          <div className="p-4 space-y-3 pb-36">
             {/* Pull to refresh hint */}
             <div className="text-center">
               <button onClick={refetch} className="text-xs text-gray-400 active:text-brand-500">

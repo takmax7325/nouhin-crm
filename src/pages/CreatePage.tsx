@@ -94,7 +94,7 @@ export function CreatePage() {
   }
 
   return (
-    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pb-28">
+    <div className="flex flex-col h-full overflow-y-auto overscroll-contain pb-36">
       <form onSubmit={handleSubmit} className="p-4 space-y-4">
         {/* Image Section */}
         <div>
