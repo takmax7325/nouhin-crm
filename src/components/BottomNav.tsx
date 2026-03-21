@@ -44,8 +44,11 @@ export function BottomNav() {
       {/* Top border */}
       <div className="h-px bg-gray-200" />
 
-      {/* Tab buttons — fixed 64px height */}
-      <div className="flex items-stretch h-[64px]">
+      {/* ボタンエリア: 64px + safe-area分まで全て埋める */}
+      <div
+        className="flex items-stretch"
+        style={{ height: 'calc(64px + env(safe-area-inset-bottom))' }}
+      >
         <TabItem to="/list"   label="一覧" active={isList}>
           <ListIcon active={isList} />
         </TabItem>
@@ -56,9 +59,6 @@ export function BottomNav() {
           <MapIcon active={isMap} />
         </TabItem>
       </div>
-
-      {/* iPhone home indicator safe area — background only, no buttons */}
-      <div style={{ height: 'env(safe-area-inset-bottom)', background: 'white' }} />
     </nav>
   )
 }
@@ -72,7 +72,8 @@ function TabItem({
   return (
     <NavLink
       to={to}
-      className="relative flex-1 flex flex-col items-center justify-center gap-1 transition-all duration-150"
+      className="relative flex-1 flex flex-col items-center transition-all duration-150"
+      style={{ paddingTop: '10px', paddingBottom: 'calc(env(safe-area-inset-bottom) + 6px)' }}
     >
       {/* Active: top indicator bar */}
       <span
@@ -82,7 +83,10 @@ function TabItem({
 
       {/* Active: background highlight pill */}
       {active && (
-        <span className="absolute inset-x-3 inset-y-2 rounded-2xl bg-sky-50" />
+        <span
+          className="absolute left-3 right-3 top-1 rounded-2xl bg-sky-50"
+          style={{ bottom: 'calc(env(safe-area-inset-bottom) + 4px)' }}
+        />
       )}
 
       {/* Icon */}
