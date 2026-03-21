@@ -74,7 +74,7 @@ export function LoginPage() {
                   className="
                     w-full px-4 py-3.5 rounded-2xl
                     bg-sky-50 border border-sky-100
-                    text-sm text-gray-800 placeholder-gray-300
+                    text-base text-gray-800 placeholder-gray-300
                     focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400
                     transition-all
                   "
@@ -96,7 +96,7 @@ export function LoginPage() {
                     className="
                       w-full px-4 py-3.5 pr-12 rounded-2xl
                       bg-sky-50 border border-sky-100
-                      text-sm text-gray-800 placeholder-gray-300
+                      text-base text-gray-800 placeholder-gray-300
                       focus:outline-none focus:ring-2 focus:ring-sky-400 focus:border-sky-400
                       transition-all
                     "

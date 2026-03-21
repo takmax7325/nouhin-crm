@@ -177,10 +177,10 @@ export function CreatePage() {
                 onChange={e => update('product', e.target.value)}
                 required
                 className="
-                  w-full mt-1 px-3 py-2.5 text-sm
+                  w-full mt-1 px-3 py-2.5 text-base
                   bg-[#f5f5f7] border border-transparent rounded-xl
                   focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white
-                  transition-all appearance-none text-gray-900 text-sm placeholder-gray-300
+                  transition-all appearance-none text-gray-900 placeholder-gray-300
                 "
               >
                 <option value="">選択してください</option>
@@ -201,7 +201,7 @@ export function CreatePage() {
                 onChange={e => { update('address', e.target.value); setGeocoded(false) }}
                 placeholder="東京都渋谷区道玄坂1-1-1"
                 required
-                className="flex-1 px-3.5 py-3 text-sm text-gray-900 bg-[#f5f5f7] border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all placeholder-gray-300"
+                className="flex-1 px-3.5 py-3 text-base text-gray-900 bg-[#f5f5f7] border border-transparent rounded-xl focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white transition-all placeholder-gray-300"
               />
               <button
                 type="button"
@@ -231,7 +231,7 @@ export function CreatePage() {
               onChange={e => update('website', e.target.value)}
               placeholder="https://example.com"
               className="
-                w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
+                w-full mt-1.5 px-3.5 py-3 text-base text-gray-900
                 bg-[#f5f5f7] border border-transparent rounded-xl
                 focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white
                 transition-all placeholder-gray-300
@@ -299,7 +299,7 @@ function FormField({ label, value, onChange, placeholder, required, type = 'text
         placeholder={placeholder}
         required={required}
         className="
-          w-full mt-1.5 px-3.5 py-3 text-sm text-gray-900
+          w-full mt-1.5 px-3.5 py-3 text-base text-gray-900
           bg-[#f5f5f7] border border-transparent rounded-xl
           focus:outline-none focus:ring-2 focus:ring-sky-400 focus:bg-white focus:border-transparent
           transition-all placeholder-gray-300
