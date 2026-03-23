@@ -1,7 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom'
 
 const ListIcon = ({ active }: { active: boolean }) => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
     <rect x="3" y="5"     width="18" height="2.5" rx="1.25" fill={active ? '#1e3a8a' : '#9ca3af'}/>
     <rect x="3" y="10.75" width="18" height="2.5" rx="1.25" fill={active ? '#1e3a8a' : '#9ca3af'}/>
     <rect x="3" y="16.5"  width="18" height="2.5" rx="1.25" fill={active ? '#1e3a8a' : '#9ca3af'}/>
@@ -9,14 +9,14 @@ const ListIcon = ({ active }: { active: boolean }) => (
 )
 
 const PlusIcon = ({ active }: { active: boolean }) => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
     <rect x="2" y="2" width="20" height="20" rx="6" fill={active ? '#1e3a8a' : '#d1d5db'}/>
     <path d="M12 7v10M7 12h10" stroke={active ? 'white' : '#6b7280'} strokeWidth="2.2" strokeLinecap="round"/>
   </svg>
 )
 
 const MapIcon = ({ active }: { active: boolean }) => (
-  <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+  <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
     {active ? (
       <>
         <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z" fill="#1e3a8a"/>
@@ -40,12 +40,11 @@ export function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white">
       <div className="h-px bg-gray-200" />
-      <div className="flex h-14">
+      <div className="flex" style={{ height: 'calc(3.5rem + env(safe-area-inset-bottom))' }}>
         <TabItem to="/list"   label="一覧" active={isList}>   <ListIcon active={isList} /></TabItem>
         <TabItem to="/create" label="新規" active={isCreate}> <PlusIcon active={isCreate} /></TabItem>
         <TabItem to="/map"    label="地図" active={isMap}>    <MapIcon  active={isMap} /></TabItem>
       </div>
-      <div className="bg-white" style={{ height: 'calc(env(safe-area-inset-bottom) / 2)' }} />
     </nav>
   )
 }
@@ -56,7 +55,8 @@ function TabItem({
   return (
     <NavLink
       to={to}
-      className="relative flex-1 flex flex-col items-center justify-center gap-[3px] transition-all duration-150"
+      className="relative flex-1 flex flex-col items-center justify-end gap-[3px] transition-all duration-150"
+      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 10px)' }}
     >
       <span
         className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full transition-all duration-200"
@@ -66,7 +66,7 @@ function TabItem({
       <span className="relative" style={{ transform: active ? 'scale(1.08)' : 'scale(1)', transition: 'transform 0.15s' }}>
         {children}
       </span>
-      <span className="relative text-[11px] font-bold tracking-tight" style={{ color: active ? '#1e3a8a' : '#9ca3af' }}>
+      <span className="relative text-[13px] font-bold tracking-tight" style={{ color: active ? '#1e3a8a' : '#9ca3af' }}>
         {label}
       </span>
     </NavLink>
