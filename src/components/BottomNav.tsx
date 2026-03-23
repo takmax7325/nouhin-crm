@@ -55,8 +55,8 @@ function TabItem({
   return (
     <NavLink
       to={to}
-      className="relative flex-1 flex flex-col items-center justify-end gap-[3px] transition-all duration-150"
-      style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + 10px)' }}
+      className="relative flex-1 flex flex-col items-center justify-center gap-[3px] transition-all duration-150"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <span
         className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full transition-all duration-200"
