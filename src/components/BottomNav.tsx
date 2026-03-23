@@ -40,12 +40,12 @@ export function BottomNav() {
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white">
       <div className="h-px bg-gray-200" />
-      <div className="flex h-16">
+      <div className="flex h-14">
         <TabItem to="/list"   label="一覧" active={isList}>   <ListIcon active={isList} /></TabItem>
         <TabItem to="/create" label="新規" active={isCreate}> <PlusIcon active={isCreate} /></TabItem>
         <TabItem to="/map"    label="地図" active={isMap}>    <MapIcon  active={isMap} /></TabItem>
       </div>
-      <div className="bg-white" style={{ height: 'env(safe-area-inset-bottom)' }} />
+      <div className="bg-white" style={{ height: 'calc(env(safe-area-inset-bottom) / 2)' }} />
     </nav>
   )
 }
