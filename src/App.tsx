@@ -44,7 +44,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
       <OfflineBanner />
       <header
         className="flex-shrink-0 px-5 bg-white border-b border-sky-100"
-        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 12px)', paddingBottom: '12px' }}
+        style={{ paddingTop: 'calc(env(safe-area-inset-top) + 28px)', paddingBottom: '16px' }}
       >
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3 min-w-0">
