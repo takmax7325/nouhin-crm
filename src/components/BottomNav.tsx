@@ -38,9 +38,9 @@ export function BottomNav() {
   const isMap    = location.pathname === '/map'
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div className="h-px bg-gray-200" />
-      <div className="flex" style={{ height: 'calc(3.5rem + env(safe-area-inset-bottom))' }}>
+      <div className="flex h-16">
         <TabItem to="/list"   label="一覧" active={isList}>   <ListIcon active={isList} /></TabItem>
         <TabItem to="/create" label="新規" active={isCreate}> <PlusIcon active={isCreate} /></TabItem>
         <TabItem to="/map"    label="地図" active={isMap}>    <MapIcon  active={isMap} /></TabItem>
@@ -56,7 +56,6 @@ function TabItem({
     <NavLink
       to={to}
       className="relative flex-1 flex flex-col items-center justify-center gap-[3px] transition-all duration-150"
-      style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
       <span
         className="absolute top-0 left-4 right-4 h-[3px] rounded-b-full transition-all duration-200"
