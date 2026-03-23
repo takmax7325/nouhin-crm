@@ -1,11 +1,11 @@
 {
-  "name": "納品管理CRMマップ",
-  "short_name": "納品CRM",
+  "name": "O2Room",
+  "short_name": "O2Room",
   "description": "納品先の管理・地図表示・CRM機能",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#22c55e",
+  "theme_color": "#1e3a8a",
   "orientation": "portrait",
   "icons": [
     {
