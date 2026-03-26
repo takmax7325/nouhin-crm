@@ -168,27 +168,29 @@ export function LoginPage() {
   }
 
   return (
-    <div className="h-full flex flex-col items-center justify-center bg-[#e8f4fd] relative overflow-y-auto overflow-x-hidden"
-         style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: '24px' }}>
+    <div className="h-full flex flex-col bg-[#e8f4fd] relative overflow-y-auto overflow-x-hidden"
+         style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'max(env(safe-area-inset-bottom), 32px)' }}>
       <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-blue-50 to-white" />
       <div className="absolute top-[-80px] right-[-80px] w-72 h-72 bg-sky-300/25 rounded-full blur-3xl" />
       <div className="absolute bottom-[-60px] left-[-60px] w-64 h-64 bg-blue-400/15 rounded-full blur-3xl" />
 
-      <div className="relative w-full max-w-sm px-8 flex flex-col items-center">
-
-        <div className="flex flex-col items-center mb-10">
-          <div className="w-24 h-24 rounded-[28px] overflow-hidden shadow-2xl mb-5 border-2 border-white/80 ring-4 ring-sky-100">
-            <img src="/apple-touch-icon.png" alt="O2Room"
-              className="w-full h-full object-cover"
-              onError={e => { (e.target as HTMLImageElement).style.display='none' }}
-            />
-          </div>
-          <h1 className="text-[34px] font-bold text-[#1e3a8a] tracking-tight">O2Room</h1>
-          <p className="text-sky-400 text-[13px] mt-1 font-medium tracking-wide">
-            {mode === 'email' ? 'サインイン' :
-             mode === 'setup' ? 'PINコードを設定' : 'PINコードを入力'}
-          </p>
+      {/* ── ロゴエリア（上半分中央） ── */}
+      <div className="relative flex-1 flex flex-col items-center justify-center pb-4">
+        <div className="w-24 h-24 rounded-[28px] overflow-hidden shadow-2xl mb-5 border-2 border-white/80 ring-4 ring-sky-100">
+          <img src="/apple-touch-icon.png" alt="O2Room"
+            className="w-full h-full object-cover"
+            onError={e => { (e.target as HTMLImageElement).style.display='none' }}
+          />
         </div>
+        <h1 className="text-[34px] font-bold text-[#1e3a8a] tracking-tight">O2Room</h1>
+        <p className="text-sky-400 text-[13px] mt-1 font-medium tracking-wide">
+          {mode === 'email' ? 'サインイン' :
+           mode === 'setup' ? 'PINコードを設定' : 'PINコードを入力'}
+        </p>
+      </div>
+
+      {/* ── ボタン・フォームエリア（下部固定） ── */}
+      <div className="relative w-full max-w-sm px-8 flex flex-col items-center self-center">
 
         {mode === 'email' && (
           <div className="w-full space-y-3">
@@ -279,6 +281,7 @@ export function LoginPage() {
         {isLoading && (
           <div className="mt-6 w-6 h-6 border-2 border-[#1e3a8a]/30 border-t-[#1e3a8a] rounded-full animate-spin" />
         )}
+
       </div>
     </div>
   )
