@@ -38,7 +38,7 @@ export function BottomNav() {
   const isMap    = location.pathname === '/map'
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
       <div className="h-px bg-gray-200" />
       <div className="flex h-14">
         <TabItem to="/list"   label="一覧" active={isList}>   <ListIcon active={isList} /></TabItem>
