@@ -5,13 +5,30 @@ import { SearchBar, FilterBar } from '../components/SearchBar'
 import { ListSkeleton } from '../components/Skeleton'
 import { EmptyState } from '../components/OfflineBanner'
 import { GlassCard } from '../components/GlassCard'
+import { ImportModal } from '../components/ImportModal'
+import { useRegisterHeaderAction } from '../contexts/HeaderContext'
 import type { FilterState, Delivery } from '../types'
 
 export function ListPage() {
   const { deliveries, isLoading, error, refetch, deleteDelivery } = useDeliveries()
   const [filter, setFilter] = useState<FilterState>({ search: '', prefecture: null, product: null })
   const [deleteConfirm, setDeleteConfirm] = useState<Delivery | null>(null)
+  const [showImport, setShowImport] = useState(false)
   const navigate = useNavigate()
+
+  // ヘッダー右上にインポートボタンを挿し込む
+  useRegisterHeaderAction(
+    <button
+      onClick={() => setShowImport(true)}
+      className="flex items-center gap-1.5 px-3 py-2 rounded-xl font-bold text-[#1e3a8a] text-sm bg-sky-50 border border-sky-200 active:scale-95 transition-all"
+    >
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+        <path d="M12 16V4M12 16l-4-4M12 16l4-4" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M4 20h16" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round"/>
+      </svg>
+      インポート
+    </button>
+  )
 
   const filtered = filterDeliveries(deliveries, filter)
 
@@ -94,6 +111,14 @@ export function ListPage() {
           </div>
         )}
       </div>
+
+      {/* Import Modal */}
+      {showImport && (
+        <ImportModal
+          onClose={() => setShowImport(false)}
+          onImported={() => refetch()}
+        />
+      )}
 
       {/* Delete Confirm Modal */}
       {deleteConfirm && (
