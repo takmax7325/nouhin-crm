@@ -155,6 +155,8 @@ export function LoginPage() {
   const handleEmailLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     if (!email || !password) { setError('入力してください'); return }
+    // キーボードを閉じる
+    ;(document.activeElement as HTMLElement)?.blur()
     setIsLoading(true); setError(null)
     const err = await signIn(email, password)
     if (err) {
