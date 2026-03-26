@@ -1,5 +1,6 @@
 import { Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import { useAuth } from './contexts/AuthContext'
+import { HeaderProvider, useHeaderAction } from './contexts/HeaderContext'
 import { OfflineBanner } from './components/OfflineBanner'
 import { BottomNav } from './components/BottomNav'
 import { LoginPage } from './pages/LoginPage'
@@ -38,6 +39,7 @@ function AppLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation()
   const isDetail = location.pathname.startsWith('/delivery/')
   const meta = PAGE_META[location.pathname]
+  const { action } = useHeaderAction()
 
   return (
     <div className="flex flex-col overflow-hidden bg-[#f0f8ff]" style={{ height: '100dvh' }}>
@@ -75,6 +77,8 @@ function AppLayout({ children }: { children: React.ReactNode }) {
               </div>
             )}
           </div>
+          {/* ページから挿し込まれるヘッダー右側アクション */}
+          {action && <div className="flex-shrink-0">{action}</div>}
         </div>
       </header>
       <main className="flex-1 overflow-hidden relative">
@@ -87,22 +91,24 @@ function AppLayout({ children }: { children: React.ReactNode }) {
 
 export function App() {
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/*" element={
-        <ProtectedRoute>
-          <AppLayout>
-            <Routes>
-              <Route path="/"              element={<Navigate to="/list" replace />} />
-              <Route path="/map"           element={<MapPage />} />
-              <Route path="/list"          element={<ListPage />} />
-              <Route path="/delivery/:id" element={<DetailPage />} />
-              <Route path="/create"        element={<CreatePage />} />
-              <Route path="*"              element={<Navigate to="/list" replace />} />
-            </Routes>
-          </AppLayout>
-        </ProtectedRoute>
-      } />
-    </Routes>
+    <HeaderProvider>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/*" element={
+          <ProtectedRoute>
+            <AppLayout>
+              <Routes>
+                <Route path="/"              element={<Navigate to="/list" replace />} />
+                <Route path="/map"           element={<MapPage />} />
+                <Route path="/list"          element={<ListPage />} />
+                <Route path="/delivery/:id" element={<DetailPage />} />
+                <Route path="/create"        element={<CreatePage />} />
+                <Route path="*"              element={<Navigate to="/list" replace />} />
+              </Routes>
+            </AppLayout>
+          </ProtectedRoute>
+        } />
+      </Routes>
+    </HeaderProvider>
   )
 }
