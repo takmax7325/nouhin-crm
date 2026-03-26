@@ -170,7 +170,7 @@ export function LoginPage() {
   return (
     <div className="fixed inset-0 flex flex-col bg-[#e8f4fd] overflow-y-auto overflow-x-hidden"
          style={{ paddingTop: 'env(safe-area-inset-top)', paddingBottom: 'max(env(safe-area-inset-bottom), 32px)' }}>
-      <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-blue-50 to-white" />
+      <div className="absolute inset-0 bg-gradient-to-br from-sky-100 via-sky-50 to-sky-100" />
       <div className="absolute top-[-80px] right-[-80px] w-72 h-72 bg-sky-300/25 rounded-full blur-3xl" />
       <div className="absolute bottom-[-60px] left-[-60px] w-64 h-64 bg-blue-400/15 rounded-full blur-3xl" />
 
