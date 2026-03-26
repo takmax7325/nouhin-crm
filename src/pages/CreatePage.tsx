@@ -142,24 +142,33 @@ export function CreatePage() {
     e.preventDefault()
     if (!isValid) { setError('必須項目を入力してください'); return }
     setIsSaving(true); setError(null)
+
+    // stale closure を避けるためローカル変数で管理
+    let submitForm = { ...form }
     if (!geocoded) {
-      const result = await geocode(form.address)
+      const result = await geocode(submitForm.address)
       if (result) {
-        setForm(prev => ({
-          ...prev, lat: result.lat, lng: result.lng,
-          website: result.website && !prev.website ? result.website : prev.website,
-        }))
+        submitForm = {
+          ...submitForm,
+          lat: result.lat,
+          lng: result.lng,
+          website: result.website && !submitForm.website ? result.website : submitForm.website,
+        }
+        setForm(submitForm)
       }
     }
+
     try {
-      const delivery = await deliveryService.create(form)
+      const delivery = await deliveryService.create(submitForm)
       deliveryCache.upsertOne(delivery)
       for (let i = 0; i < selectedImages.length; i++) {
         try { await imageService.upload(delivery.id, selectedImages[i], i === 0 ? 'main' : 'sub') } catch {}
       }
       navigate(`/delivery/${delivery.id}`, { replace: true })
-    } catch (err) {
-      setError(err instanceof Error ? err.message : '保存に失敗しました')
+    } catch (err: any) {
+      // Supabase エラーは Error インスタンスでない場合があるため詳細を表示
+      const msg = err?.message || err?.error_description || err?.details || '保存に失敗しました'
+      setError(msg)
     }
     setIsSaving(false)
   }
@@ -227,12 +236,15 @@ export function CreatePage() {
                     <span className="absolute right-2 top-1/2 -translate-y-1/2 text-xs text-red-400">✗</span>
                   )}
                 </div>
-                {zipStatus === 'ok' && (
-                  <p className="text-[10px] text-sky-500 mt-0.5">住所を自動入力しました</p>
-                )}
-                {zipStatus === 'error' && (
-                  <p className="text-[10px] text-red-400 mt-0.5">該当なし</p>
-                )}
+                {/* 固定高さで確保 → 商品名ボックスとの高さズレを防ぐ */}
+                <div className="h-4 mt-0.5">
+                  {zipStatus === 'ok' && (
+                    <p className="text-[10px] text-sky-500">住所を自動入力しました</p>
+                  )}
+                  {zipStatus === 'error' && (
+                    <p className="text-[10px] text-red-400">該当なし</p>
+                  )}
+                </div>
               </div>
               <div>
                 <label className="text-[11px] font-semibold text-gray-400 tracking-wide uppercase">商品名 <span className="text-red-400">*</span></label>
