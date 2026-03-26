@@ -44,7 +44,7 @@ export function BottomNav() {
     // iOSホームインジケーターの問題を完全回避
     <div
       className="fixed bottom-0 left-0 right-0 z-40 flex justify-center pointer-events-none"
-      style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 16px)' }}
+      style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 8px)' }}
     >
       <nav
         className="flex pointer-events-auto rounded-[32px] border border-black/[0.05]"
